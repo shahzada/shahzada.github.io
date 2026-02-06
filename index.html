@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shahzada Mansoor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --text-primary: #e8e8ed;
+            --text-secondary: #a1a1aa;
+            --text-muted: #52525b;
+            --accent: #c4b5fd;
+            --border: #1e1e24;
+            --tag-border: #2a2a32;
+            --tag-text: #71717a;
+            --green: #4ade80;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 96px 24px 64px;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 64px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .header h1 {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: 64px;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .header h1 .name-accent {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .tagline {
+            font-size: 16px;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+            margin-bottom: 32px;
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav a {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Experience Section */
+        .section-label {
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.15s;
+        }
+
+        .entry {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 32px;
+            margin-bottom: 56px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .entry:nth-child(2) { animation-delay: 0.2s; }
+        .entry:nth-child(3) { animation-delay: 0.3s; }
+        .entry:nth-child(4) { animation-delay: 0.4s; }
+        .entry:nth-child(5) { animation-delay: 0.5s; }
+        .entry:nth-child(6) { animation-delay: 0.6s; }
+        .entry:nth-child(7) { animation-delay: 0.7s; }
+
+        .entry-date {
+            font-size: 13px;
+            color: var(--text-muted);
+            padding-top: 8px;
+            white-space: nowrap;
+        }
+
+        .entry-date .active-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            margin-left: 6px;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
+
+        .entry-company {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            line-height: 1.3;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 4px;
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .company-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .company-logo-badge {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #581c87, #4338ca);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-fallback {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #374151, #1f2937);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .entry-role {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .entry-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+
+        .entry-content ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 16px;
+        }
+
+        .entry-content ul li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .entry-content ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 9px;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .entry-content h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 20px 0 8px;
+        }
+
+        .entry-content h3:first-of-type {
+            margin-top: 4px;
+        }
+
+        /* Tech tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 16px;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--tag-text);
+            padding: 4px 10px;
+            border: 1px solid var(--tag-border);
+            border-radius: 4px;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+            animation-delay: 0.8s;
+        }
+
+        footer p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .container {
+                padding: 64px 20px 48px;
+            }
+
+            .header h1 {
+                font-size: 44px;
+            }
+
+            .entry {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                margin-bottom: 48px;
+            }
+
+            .entry-date {
+                padding-top: 0;
+            }
+
+            nav {
+                gap: 16px;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <header class="header">
+            <h1>
+                Shahzada<br>
+                <span class="name-accent">Mansoor</span>
+            </h1>
+            <p class="tagline">Software, AI, Crypto, Finance</p>
+            <nav>
+                <a href="https://github.com/shahzada">GitHub</a>
+                <a href="https://x.com/shahzadamansoor">X</a>
+                <a href="/blog">Blog</a>
+                <a href="mailto:shahzada@gmail.com">Email</a>
+            </nav>
+        </header>
+
+        <!-- Experience -->
+        <p class="section-label">Experience</p>
+
+        <div class="experience">
+
+            <!-- Private Equity SaaS -->
+            <div class="entry">
+                <div class="entry-date">2024 &mdash; Present <span class="active-dot"></span></div>
+                <div class="entry-content">
+                    <div class="entry-company"><span class="company-logo-badge">PE</span>Private Equity SaaS</div>
+                    <div class="entry-role">CoFounder &amp; CTO</div>
+                    <p class="entry-description">Designed and developed private equity SaaS platform for private equity firms to streamline investment tracking and portfolio operations.</p>
+                    <ul>
+                        <li>Built AI-powered workflows for automated data extraction, document analysis, and due diligence processes</li>
+                        <li>Developed multi-tenant architecture with secure role-based access controls (RBAC) for PE analysts, operators, and consultants</li>
+                        <li>Implemented data pipelines for ingesting financial metrics and generating dashboards for performance insights</li>
+                        <li>Leading product strategy, engineering roadmap, and hiring</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag">Next.js</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">DynamoDB</span>
+                        <span class="tag">S3</span>
+                        <span class="tag">EC2</span>
+                        <span class="tag">AWS</span>
+                        <span class="tag">Redis</span>
+                        <span class="tag">OpenAI</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lyft -->
+            <div class="entry">
+                <div class="entry-date">2017 &mdash; 2023</div>
+                <div class="entry-content">
+                    <div class="entry-company"><span class="company-logo"><img src="https://cdn.brandfetch.io/lyft.com/w/512/h/512/logo" alt="Lyft logo" onerror="this.src='https://www.google.com/s2/favicons?domain=lyft.com&sz=128'"></span>Lyft</div>
+                    <div class="entry-role">Lead Software Engineer</div>
+                    <p class="entry-description">Worked across multiple teams.</p>
+
+                    <h3>Lyft Autonomous</h3>
+                    <ul>
+                        <li>Delivered and supported large-scale initiatives</li>
+                        <li>Launched Autonomous in Miami and Austin markets</li>
+                        <li>Launched Lyft classic flow to autonomous rides (increased Lyft autonomous demand by 600%)</li>
+                        <li>Defined product and engineering specs for new features</li>
+                        <li>Mentoring engineers in design, architecture, and code reviews</li>
+                    </ul>
+
+                    <h3>Communications Platform / Customer Data Platform</h3>
+                    <ul>
+                        <li>Designed various features for CDP platform used across Lyft services</li>
+                    </ul>
+
+                    <h3>Support Platform</h3>
+                    <ul>
+                        <li>Led efforts to reduce the need for customers to seek help by 75%, scaling support processes and technology to meet 20X growth in 4 years</li>
+                        <li>Led the design and development of Support Phone, SMS, and Chat channels via Lyft app using Twilio</li>
+                        <li>Drove the GDPR and CCPA effort for Support Platform teams</li>
+                        <li>Led the design of Support Platform's resilience architecture for fault tolerance</li>
+                    </ul>
+
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Go</span>
+                        <span class="tag">DynamoDB</span>
+                        <span class="tag">S3</span>
+                        <span class="tag">EC2</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">Redis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eventbrite (Ticketfly) -->
+            <div class="entry">
+                <div class="entry-date">2016 &mdash; 2017</div>
+                <div class="entry-content">
+                    <div class="entry-company"><span class="company-logo"><img src="https://cdn.brandfetch.io/eventbrite.com/w/512/h/512/logo" alt="Eventbrite logo" onerror="this.src='https://www.google.com/s2/favicons?domain=eventbrite.com&sz=128'"></span>Eventbrite (Ticketfly)</div>
+                    <div class="entry-role">Sr. Software Engineer</div>
+                    <p class="entry-description">Platform team at Ticketfly (acquired by Eventbrite).</p>
+                    <ul>
+                        <li>Worked on Authentication, Authorization, Traffic management, Queue service integration, and API management</li>
+                        <li>Integrated Pandora music app with Ticketfly to allow purchase of live event tickets</li>
+                        <li>Integrated and expanded queuing service for high traffic events to combat spiky traffic</li>
+                        <li>Drove efforts to make Ticketfly PCI compliant by identifying and fixing security issues (XSS, CSRF) and framework upgrades</li>
+                        <li>Built auditing framework to audit client actions</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">Scala</span>
+                        <span class="tag">AWS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expedia -->
+            <div class="entry">
+                <div class="entry-date">2014 &mdash; 2016</div>
+                <div class="entry-content">
+                    <div class="entry-company"><span class="company-logo"><img src="https://cdn.brandfetch.io/expedia.com/w/512/h/512/logo" alt="Expedia logo" onerror="this.src='https://www.google.com/s2/favicons?domain=expedia.com&sz=128'"></span>Expedia</div>
+                    <div class="entry-role">Sr. Software Engineer</div>
+                    <ul>
+                        <li>Developed features for pricing computation engine including branded deals and attribute based savings, generating $26M in revenue in 2015</li>
+                        <li>Designed and developed test automation tools and frameworks to increase testability speed and code quality</li>
+                        <li>Wrote stress and performance tools</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">jMeter</span>
+                        <span class="tag">AWS</span>
+                        <span class="tag">HP Performance</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amazon -->
+            <div class="entry">
+                <div class="entry-date">2011 &mdash; 2014</div>
+                <div class="entry-content">
+                    <div class="entry-company"><span class="company-logo"><img src="https://cdn.brandfetch.io/amazon.com/w/512/h/512/logo" alt="Amazon logo" onerror="this.src='https://www.google.com/s2/favicons?domain=amazon.com&sz=128'"></span>Amazon</div>
+                    <div class="entry-role">Software Engineer</div>
+                    <ul>
+                        <li>Developed 'Customer Information Check Service' and fraud model, an Amazon-wide service to detect potential fraudsters during purchase, saving approximately $18M/year</li>
+                        <li>Worked on projects to reduce activation failures, saving approximately $2M/year in commissions</li>
+                        <li>Developed Slam Kick Out project &ndash; an Amazon-wide service to kick packages out of shipment queue if activation fails for wireless and Kindle devices</li>
+                        <li>Developed and integrated APIs for AT&amp;T, Verizon, Sprint, and T-Mobile with Amazon</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">DynamoDB</span>
+                        <span class="tag">EC2</span>
+                        <span class="tag">SWF</span>
+                        <span class="tag">SQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Microsoft -->
+            <div class="entry">
+                <div class="entry-date">2009 &mdash; 2011</div>
+                <div class="entry-content">
+                    <div class="entry-company"><span class="company-logo"><img src="https://cdn.brandfetch.io/microsoft.com/w/512/h/512/logo" alt="Microsoft logo" onerror="this.src='https://www.google.com/s2/favicons?domain=microsoft.com&sz=128'"></span>Microsoft</div>
+                    <div class="entry-role">Software Engineer</div>
+                    <ul>
+                        <li>Test frameworks automation in Windows Serviceability group (WinSE)</li>
+                        <li>Test framework automation at Xbox Live Services</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag">C#</span>
+                        <span class="tag">.NET</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 Shahzada Mansoor</p>
+        </footer>
+
+    </div>
+</body>
+</html>
